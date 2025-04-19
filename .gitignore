@@ -1,0 +1,51 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Expo
+.expo/
+.expo-shared/
+
+# React Native
+android/
+ios/
+*.keystore
+*.iml
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+logs/
+*.tlog
+
+# IDEs/Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+build/
+dist/
+.expo/web-build/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Others
+coverage/
+*.lock

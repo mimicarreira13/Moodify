@@ -1,21 +1,99 @@
-import { Stack } from "expo-router";
-import { TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import React, { useState, useEffect } from 'react';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Ionicons } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+// Import your screens
+import HomeScreen from './home'; // This is your Home screen
+import MyFavoritesScreen from './screens/favorites';
+import MoodHistoryScreen from './screens/history';
+import AboutScreen from './screens/about';
+import FeedbackScreen from './screens/feedback';
+import PrivacyScreen from './screens/privacy';
+import LoadingScreen from './index'; // Import the Loading Screen
+
+const Drawer = createDrawerNavigator();
+
+function CustomMenuButton() {
+    const navigation = useNavigation();
+    return (
+        <TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{ marginLeft: 16 }}>
+            <Ionicons name="menu" size={36} color="black" />
+        </TouchableOpacity>
+    );
+}
 
 export default function Layout() {
+    const [isLoading, setIsLoading] = useState(true);
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    useEffect(() => {
+        setTimeout(() => setIsLoading(false), 2000); // Simulate loading screen
+    }, []);
+
+    const toggleTheme = () => {
+        setIsDarkMode(prev => !prev);
+    };
+
+    if (isLoading) {
+        return <LoadingScreen />;
+    }
+
     return (
-        <Stack
+        <Drawer.Navigator
             screenOptions={{
-                headerStyle: { backgroundColor: "#ffffff" },
-                headerTitle: "",
-                headerLeft: () => (
-                    <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => alert("Menu aberto!")}>
-                        <Ionicons name="menu" size={24} color="#000" />
-                    </TouchableOpacity>
-                ),
+                drawerStyle: { backgroundColor: '#ffffff', width: 240 },
+                headerStyle: { backgroundColor: '#ffffff' },
+                headerTitle: '',
+                drawerActiveTintColor: '#1DB954',
+                drawerInactiveTintColor: '#000',
+                headerLeft: () => <CustomMenuButton />,
+                drawerContentContainerStyle: { paddingTop: 100 },
             }}
         >
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-        </Stack>
+            <Drawer.Screen
+                name="Home"
+                component={HomeScreen} // Home screen with the mood buttons
+                options={{
+                    drawerIcon: ({ color }) => <Ionicons name="home" size={20} color={color} />,
+                }}
+            />
+            <Drawer.Screen
+                name="My Favorites"
+                component={MyFavoritesScreen}
+                options={{
+                    drawerIcon: ({ color }) => <Ionicons name="heart" size={20} color={color} />,
+                }}
+            />
+            <Drawer.Screen
+                name="Mood History"
+                component={MoodHistoryScreen}
+                options={{
+                    drawerIcon: ({ color }) => <Ionicons name="time" size={20} color={color} />,
+                }}
+            />
+            <Drawer.Screen
+                name="About Moodify"
+                component={AboutScreen}
+                options={{
+                    drawerIcon: ({ color }) => <Ionicons name="information-circle" size={20} color={color} />,
+                }}
+            />
+            <Drawer.Screen
+                name="Feedback"
+                component={FeedbackScreen}
+                options={{
+                    drawerIcon: ({ color }) => <Ionicons name="mail" size={20} color={color} />,
+                }}
+            />
+            <Drawer.Screen
+                name="Privacy"
+                component={PrivacyScreen}
+                options={{
+                    drawerIcon: ({ color }) => <Ionicons name="lock-closed" size={20} color={color} />,
+                }}
+            />
+        </Drawer.Navigator>
     );
 }

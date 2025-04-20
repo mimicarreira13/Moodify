@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { View, Image, StyleSheet, Animated, Easing } from "react-native";
+import React, { useEffect } from "react";
+import { Animated, Easing, View, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 
 export default function LoadingScreen() {
     const router = useRouter();
-    const logoScale = new Animated.Value(0.1);
+    const logoScale = new Animated.Value(0.1); // Initialize scale for animation
 
     useEffect(() => {
         Animated.sequence([
@@ -14,12 +14,11 @@ export default function LoadingScreen() {
                 useNativeDriver: true,
                 easing: Easing.out(Easing.exp),
             }),
-            Animated.delay(1000), // Optional pause before navigating
+            Animated.delay(2000), // Shorter delay for testing (2 seconds)
         ]).start(() => {
-            // 👇 This is the key line:
-            router.replace("/home"); // Navigates to your actual HomeScreen
+            router.replace("/home"); // Navigate to the Home screen after animation
         });
-    }, []);
+    }, [router]);
 
     return (
         <View style={styles.container}>
@@ -38,7 +37,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 50,
     },
     logo: {
         width: 300,

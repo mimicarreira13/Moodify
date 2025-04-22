@@ -3,6 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { DrawerNavigationProp } from '@react-navigation/drawer';
 
 // Import your screens
 import HomeScreen from './home'; // This is your Home screen
@@ -15,8 +16,18 @@ import LoadingScreen from './index'; // Import the Loading Screen
 
 const Drawer = createDrawerNavigator();
 
+type DrawerParamList = {
+    Home: undefined;
+    'My Favorites': undefined;
+    'Mood History': undefined;
+    'About Moodify': undefined;
+    Feedback: undefined;
+    Privacy: undefined;
+};
+
 function CustomMenuButton() {
-    const navigation = useNavigation();
+    const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
+
     return (
         <TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{ marginLeft: 16 }}>
             <Ionicons name="menu" size={36} color="black" />

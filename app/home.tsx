@@ -1,9 +1,15 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Stack = createStackNavigator();
+type StackParamList = {
+    'Mood Selector': undefined;
+    Mood: { mood: string };
+};
+
+const Stack = createStackNavigator<StackParamList>();
 
 const moods = [
     { emoji: '🙂', label: 'Happy', color: '#FFD93D' },
@@ -12,12 +18,29 @@ const moods = [
     { emoji: '🌙', label: 'Relaxed', color: '#A29BFE' },
 ];
 
+type MoodButtonsNavigationProp = StackNavigationProp<StackParamList, 'Mood Selector'>;
+
 function MoodButtons() {
-    const navigation = useNavigation();
+    const navigation = useNavigation<MoodButtonsNavigationProp>();
+    const [welcomeMessage, setWelcomeMessage] = useState('Welcome to Moodify!');
+
+    useEffect(() => {
+        const checkFirstTime = async () => {
+            const hasOpened = await AsyncStorage.getItem('hasOpenedApp');
+            if (hasOpened) {
+                setWelcomeMessage('Welcome back!');
+            } else {
+                await AsyncStorage.setItem('hasOpenedApp', 'true');
+            }
+        };
+
+        checkFirstTime();
+    }, []);
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Choose your mood:</Text>
+            <Text style={styles.welcome}>{welcomeMessage}</Text>
+            <Text style={styles.subtext}>Choose your mood:</Text>
             <View style={styles.moodContainer}>
                 {moods.map((mood) => (
                     <TouchableOpacity
@@ -34,22 +57,22 @@ function MoodButtons() {
     );
 }
 
-function MoodScreen({ route }: { route: any }) {
-    const { mood } = route.params;
-
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>You selected: {mood}</Text>
-        </View>
-    );
-}
-
 export default function HomeScreen() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Mood Selector" component={MoodButtons} />
             <Stack.Screen name="Mood" component={MoodScreen} />
         </Stack.Navigator>
+    );
+}
+
+function MoodScreen({ route }: { route: { params: { mood: string } } }) {
+    const { mood } = route.params;
+
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>You selected: {mood}</Text>
+        </View>
     );
 }
 
@@ -60,6 +83,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 20,
+    },
+    welcome: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    subtext: {
+        fontSize: 18, // Tamanho menor para o texto "Choose your mood"
+        color: '#666',
+        marginBottom: 20,
+        textAlign: 'center',
     },
     title: {
         fontSize: 28,

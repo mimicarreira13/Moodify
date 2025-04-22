@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import HomeScreen from '../app/home';
 import MyFavoritesScreen from '../app/screens/favorites';
 import MoodHistoryScreen from '../app/screens/history';
@@ -12,6 +13,12 @@ import CustomMenuButton from '../components/buttons/CustomMenuButton';
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator() {
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    const toggleMode = () => {
+        setIsDarkMode((prevMode) => !prevMode);
+    };
+
     return (
         <Drawer.Navigator
             screenOptions={{
@@ -66,6 +73,47 @@ export default function DrawerNavigator() {
                     drawerIcon: ({ color }) => <Ionicons name="lock-closed" size={20} color={color} />,
                 }}
             />
+            <Drawer.Screen
+                name={isDarkMode ? "Dark Mode" : "Light Mode"}
+                component={() => null} // Não renderiza uma nova página
+                options={{
+                    drawerIcon: ({ color }) => (
+                        <Ionicons
+                            name={isDarkMode ? "moon" : "sunny"}
+                            size={20}
+                            color={color}
+                        />
+                    ),
+                    drawerLabelStyle: {
+                        fontWeight: 'normal', // Garante que o texto não fique em negrito
+                    },
+                    drawerItemStyle: {
+                        height: 50, // Garante que o tamanho seja consistente com os outros itens
+                    },
+                }}
+                listeners={{
+                    drawerItemPress: (e) => {
+                        e.preventDefault(); // Evita que o painel lateral feche
+                        toggleMode(); // Alterna o tema
+                    },
+                }}
+            />
         </Drawer.Navigator>
     );
 }
+
+const styles = StyleSheet.create({
+    toggleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 10, // Reduzido para diminuir o espaço à esquerda
+    },
+    icon: {
+        marginRight: 10,
+    },
+    toggleText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+});

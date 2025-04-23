@@ -1,14 +1,16 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import ThemedText from "../../components/ThemedText";
+import ThemedBackground from '../../components/ThemedBackground';
 
 export default function AboutScreen() {
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>🙋‍♂️ About Moodify</Text>
-        </View>
+        <ThemedBackground style={styles.container}>
+            <ThemedText style={styles.text}>🙋‍♂️ About Moodify</ThemedText>
+        </ThemedBackground>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, justifyContent: "center", alignItems: "center" },
-    text: { fontSize: 20, fontWeight: "bold" },
+    container: { justifyContent: 'center', alignItems: 'center' },
+    text: { fontSize: 20, fontWeight: 'bold' },
 });

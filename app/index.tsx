@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Animated, Easing, View, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
+import { useTheme } from "../context/ThemeContext";
 
 export default function LoadingScreen() {
     const router = useRouter();
-    const logoScale = new Animated.Value(0.1); // Initialize scale for animation
+    const { isDarkMode } = useTheme();
+    const logoScale = useRef(new Animated.Value(0.1)).current; // UseRef para manter o valor da animação
 
     useEffect(() => {
+        // Executa a animação
         Animated.sequence([
             Animated.timing(logoScale, {
                 toValue: 1,
@@ -14,16 +17,26 @@ export default function LoadingScreen() {
                 useNativeDriver: true,
                 easing: Easing.out(Easing.exp),
             }),
-            Animated.delay(2000), // Shorter delay for testing (2 seconds)
+            Animated.delay(2000),
         ]).start(() => {
-            router.replace("/home"); // Navigate to the Home screen after animation
+            // Navega após a animação
+            router.replace("/home");
         });
-    }, [router]);
+    }, [router, logoScale]);
 
     return (
-        <View style={styles.container}>
+        <View
+            style={[
+                styles.container,
+                { backgroundColor: isDarkMode ? "#000" : "#fff" },
+            ]}
+        >
             <Animated.Image
-                source={require("../assets/images/logo.png")}
+                source={
+                    isDarkMode
+                        ? require("../assets/images/logo_dark.png")
+                        : require("../assets/images/logo_light.png")
+                }
                 style={[styles.logo, { transform: [{ scale: logoScale }] }]}
                 resizeMode="contain"
             />
@@ -34,7 +47,6 @@ export default function LoadingScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
         justifyContent: "center",
         alignItems: "center",
     },

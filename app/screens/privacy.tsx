@@ -1,14 +1,16 @@
-import { View, Text, StyleSheet } from "react-native";
+import ThemedBackground from '../../components/ThemedBackground';
+import ThemedText from '../../components/ThemedText';
+import { StyleSheet } from 'react-native';
 
 export default function PrivacyScreen() {
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>🔒 Privacy</Text>
-        </View>
+        <ThemedBackground style={styles.container}>
+            <ThemedText style={styles.text}>🔒 Privacy</ThemedText>
+        </ThemedBackground>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, justifyContent: "center", alignItems: "center" },
-    text: { fontSize: 20, fontWeight: "bold" },
+    container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+    text: { fontSize: 20, fontWeight: 'bold' },
 });

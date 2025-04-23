@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import HomeScreen from '../app/home';
 import MyFavoritesScreen from '../app/screens/favorites';
 import MoodHistoryScreen from '../app/screens/history';
@@ -9,25 +8,22 @@ import AboutScreen from '../app/screens/about';
 import FeedbackScreen from '../app/screens/feedback';
 import PrivacyScreen from '../app/screens/privacy';
 import CustomMenuButton from '../components/buttons/CustomMenuButton';
+import { useTheme } from '../context/ThemeContext';
 
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator() {
-    const [isDarkMode, setIsDarkMode] = useState(false);
-
-    const toggleMode = () => {
-        setIsDarkMode((prevMode) => !prevMode);
-    };
+    const { isDarkMode, toggleMode } = useTheme();
 
     return (
         <Drawer.Navigator
             screenOptions={{
-                drawerStyle: { backgroundColor: '#ffffff', width: 240 },
-                headerStyle: { backgroundColor: '#ffffff' },
-                headerTitle: '',
-                drawerActiveTintColor: '#1DB954',
-                drawerInactiveTintColor: '#000',
-                headerLeft: () => <CustomMenuButton />,
+                drawerStyle: { backgroundColor: isDarkMode ? '#121212' : '#fff', width: 240 },
+                headerStyle: { backgroundColor: isDarkMode ? '#121212' : '#fff' },
+                headerTintColor: isDarkMode ? '#fff' : '#000',
+                drawerActiveTintColor: isDarkMode ? '#1DB954' : '#000',
+                drawerInactiveTintColor: isDarkMode ? '#ccc' : '#000',
+                headerLeft: () => <CustomMenuButton isDarkMode={isDarkMode} />,
                 drawerContentContainerStyle: { paddingTop: 100 },
             }}
         >
@@ -75,7 +71,7 @@ export default function DrawerNavigator() {
             />
             <Drawer.Screen
                 name={isDarkMode ? "Dark Mode" : "Light Mode"}
-                component={() => null} // Não renderiza uma nova página
+                component={() => null}
                 options={{
                     drawerIcon: ({ color }) => (
                         <Ionicons
@@ -85,35 +81,19 @@ export default function DrawerNavigator() {
                         />
                     ),
                     drawerLabelStyle: {
-                        fontWeight: 'normal', // Garante que o texto não fique em negrito
+                        fontWeight: 'normal',
                     },
                     drawerItemStyle: {
-                        height: 50, // Garante que o tamanho seja consistente com os outros itens
+                        height: 50,
                     },
                 }}
                 listeners={{
                     drawerItemPress: (e) => {
-                        e.preventDefault(); // Evita que o painel lateral feche
-                        toggleMode(); // Alterna o tema
+                        e.preventDefault();
+                        toggleMode();
                     },
                 }}
             />
         </Drawer.Navigator>
     );
 }
-
-const styles = StyleSheet.create({
-    toggleContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: 10,
-        paddingHorizontal: 10, // Reduzido para diminuir o espaço à esquerda
-    },
-    icon: {
-        marginRight: 10,
-    },
-    toggleText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-});

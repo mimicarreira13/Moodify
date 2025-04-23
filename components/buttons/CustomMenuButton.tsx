@@ -8,12 +8,16 @@ type DrawerParamList = {
     [key: string]: undefined;
 };
 
-export default function CustomMenuButton() {
+type CustomMenuButtonProps = {
+    isDarkMode: boolean;
+};
+
+export default function CustomMenuButton({ isDarkMode }: CustomMenuButtonProps) {
     const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
 
     return (
         <TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{ marginLeft: 16 }}>
-            <Ionicons name="menu" size={36} color="black" />
+            <Ionicons name="menu" size={36} color={isDarkMode ? '#fff' : '#000'} />
         </TouchableOpacity>
     );
 }

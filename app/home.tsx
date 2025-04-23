@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTheme } from '../context/ThemeContext';
+import ThemedText from '../components/ThemedText';
 
 type StackParamList = {
     'Mood Selector': undefined;
@@ -22,6 +24,7 @@ type MoodButtonsNavigationProp = StackNavigationProp<StackParamList, 'Mood Selec
 
 function MoodButtons() {
     const navigation = useNavigation<MoodButtonsNavigationProp>();
+    const { isDarkMode } = useTheme();
     const [welcomeMessage, setWelcomeMessage] = useState('Welcome to Moodify!');
 
     useEffect(() => {
@@ -37,19 +40,27 @@ function MoodButtons() {
         checkFirstTime();
     }, []);
 
+    const getButtonColor = (color: string) => {
+        if (isDarkMode) {
+            // Escurece a cor no modo escuro
+            return `${color}CC`; // Adiciona opacidade para escurecer
+        }
+        return color;
+    };
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.welcome}>{welcomeMessage}</Text>
-            <Text style={styles.subtext}>Choose your mood:</Text>
+        <View style={[styles.container, { backgroundColor: isDarkMode ? '#121212' : '#F5F5F5' }]}>
+            <ThemedText style={styles.welcome}>{welcomeMessage}</ThemedText>
+            <ThemedText style={styles.subtext}>Choose your mood:</ThemedText>
             <View style={styles.moodContainer}>
                 {moods.map((mood) => (
                     <TouchableOpacity
                         key={mood.label}
-                        style={[styles.moodButton, { backgroundColor: mood.color }]}
+                        style={[styles.moodButton, { backgroundColor: getButtonColor(mood.color) }]}
                         onPress={() => navigation.navigate('Mood', { mood: mood.label })}
                     >
-                        <Text style={styles.moodEmoji}>{mood.emoji}</Text>
-                        <Text style={styles.moodLabel}>{mood.label}</Text>
+                        <ThemedText style={styles.moodEmoji}>{mood.emoji}</ThemedText>
+                        <ThemedText style={styles.moodLabel}>{mood.label}</ThemedText>
                     </TouchableOpacity>
                 ))}
             </View>
@@ -67,11 +78,12 @@ export default function HomeScreen() {
 }
 
 function MoodScreen({ route }: { route: { params: { mood: string } } }) {
+    const { isDarkMode } = useTheme();
     const { mood } = route.params;
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>You selected: {mood}</Text>
+        <View style={[styles.container, { backgroundColor: isDarkMode ? '#121212' : '#F5F5F5' }]}>
+            <ThemedText style={styles.title}>You selected: {mood}</ThemedText>
         </View>
     );
 }
@@ -79,7 +91,6 @@ function MoodScreen({ route }: { route: { params: { mood: string } } }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5F5F5',
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 20,
@@ -91,8 +102,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     subtext: {
-        fontSize: 18, // Tamanho menor para o texto "Choose your mood"
-        color: '#666',
+        fontSize: 18,
         marginBottom: 20,
         textAlign: 'center',
     },

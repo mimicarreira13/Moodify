@@ -1,16 +1,24 @@
 # 🎵 Moodify – Mood-Based Music Player App
 
-**Moodify** is a cross-platform mobile app that plays music based on how you're feeling. Whether you're happy, sad, energized, or just want to chill — let your mood guide your music.
+**Moodify** is a cross-platform mobile app that builds mood-based playlists.  
+Choose how you're feeling — and Moodify will present you a curated playlist.  
+When you're ready, just hit play and enjoy the vibe.
+
+
+> 🔧 This app is currently in early development. Only dark/light mode and navigation have been implemented so far.
 
 ---
 
 ## 🚀 Features
 
-- 🎭 **Select Your Mood** – Choose from preset moods like Happy, Sad, Energetic, or Relaxed  
-- 🎶 **Tailored Music** – Get recommended tracks and playlists via the Spotify API  
-- 📌 **Favorites** – Save songs you love for quick access  
-- 🌗 **Dark Mode Support** – Toggle between light and dark themes  
-- 📷 **(Planned)** Mood detection using camera-based emotion recognition  
+
+- 🎭 **Mood Selection** – Pick how you're feeling (Happy, Sad, Energetic, or Relaxed)  
+- 🎵 **Mood-Based Playlists** – Instantly generate a playlist that matches your mood  
+- ▶️ **Manual Playback** – Music only starts when you press Play  
+- 📌 **Favorites** – Save your favorite tracks for later  
+- 🌗 **Dark Mode** – Optional dark theme for better mood experience  
+- 📷 **(Planned)** Mood detection using your camera
+ 
 
 ---
 

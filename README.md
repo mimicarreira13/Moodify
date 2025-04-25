@@ -1,36 +1,44 @@
-# 🎵 Moodify – Mood-Based Music Recommender App
+# 🎵 Moodify – Mood-Based Music Player App
 
-**Moodify** is a React Native mobile app that recommends music based on your current mood. Whether you're feeling happy, sad, energetic, or chill — let your vibe choose the playlist.
+**Moodify** is a cross-platform mobile app that builds mood-based playlists.  
+Choose how you're feeling — and Moodify will present you a curated playlist.  
+When you're ready, just hit play and enjoy the vibe.
+
+
+> 🔧 This app is currently in early development. Only dark/light mode and navigation have been implemented so far.
 
 ---
 
 ## 🚀 Features
 
-- 🎭 **Mood Selection** – Choose your current mood from a list (e.g., Happy, Sad, Energetic, Relaxed)
-- 🎷 **Smart Recommendations** – Get personalized tracks/playlists using the Spotify API
-- 📎 **Save Favorites** – Bookmark your favorite tracks
-- 🌗 **Dark Mode** – Because vibes change with the lights off
-- 🔥 **(Optional)** Emotion detection via camera (face-based mood analysis)
+
+- 🎭 **Mood Selection** – Pick how you're feeling (Happy, Sad, Energetic, or Relaxed)  
+- 🎵 **Mood-Based Playlists** – Instantly generate a playlist that matches your mood  
+- ▶️ **Manual Playback** – Music only starts when you press Play  
+- 📌 **Favorites** – Save your favorite tracks for later  
+- 🌗 **Dark Mode** – Optional dark theme for better mood experience  
+- 📷 **(Planned)** Mood detection using your camera
+ 
 
 ---
 
 ## 💠 Tech Stack
 
-- **React Native** – Cross-platform mobile app development
-- **Expo** – Fast development and camera access
-- **Spotify Web API** – To fetch music based on mood tags
-- **AsyncStorage** – To save favorite songs locally
-- *(Optional)* **ML Kit / Emotion API** – Face-based emotion recognition
+- **React Native** – Framework for cross-platform development  
+- **Expo** – Development toolkit and camera API access  
+- **Spotify Web API** – For fetching mood-based tracks  
+- **AsyncStorage** – Save user data locally  
+- *(Planned)* **ML Kit / Emotion API** – For facial emotion detection  
 
 ---
 
 ## 📸 Screenshots
 
-_Add screenshots here once available._
+_Screenshots coming soon._
 
 ---
 
-## 🧐 Mood-to-Genre Mapping
+## 🎼 Mood-to-Genre Mapping
 
 | Mood      | Genre Tags              |
 |-----------|-------------------------|
@@ -41,31 +49,15 @@ _Add screenshots here once available._
 
 ---
 
-## 🔐 Setup & Authentication
-
-1. Create a Spotify Developer account: [https://developer.spotify.com](https://developer.spotify.com)
-2. Register your app and get your **Client ID** and **Client Secret**
-3. Create a `.env` file and add:
-
-```env
-SPOTIFY_CLIENT_ID=your_client_id
-SPOTIFY_CLIENT_SECRET=your_client_secret
-SPOTIFY_REDIRECT_URI=your_redirect_uri
-```
-
-4. Use [`react-native-app-auth`](https://github.com/FormidableLabs/react-native-app-auth) or similar for OAuth2 integration
-
----
-
 ## 🧪 How to Run
 
 ```bash
-git clone https://github.com/yourusername/moodify.git
+git clone git@github.com:mimicarreira13/Moodify.git
 npm install
-npx expo start
+expo start
 ```
 
-> 📱 Open with Expo Go on your mobile device to test!
+> 📱 Open with Expo Go on the mobile device to test!
 
 ---
 
@@ -81,7 +73,6 @@ npx expo start
 ## 🙌 Credits
 
 - Built with ❤️ using React Native + Spotify
-- Icons by [Phosphor Icons](https://phosphoricons.com/)
 - Music intelligence powered by Spotify Web API
 
 ---

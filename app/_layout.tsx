@@ -1,21 +1,18 @@
-import { Stack } from "expo-router";
-import { TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import React, { useState, useEffect } from 'react';
+import DrawerNavigator from '../navigators/DrawerNavigator';
+import LoadingScreen from './index';
+import { ThemeProvider } from '../context/ThemeContext';
 
 export default function Layout() {
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => setIsLoading(false), 2000);
+    }, []);
+
     return (
-        <Stack
-            screenOptions={{
-                headerStyle: { backgroundColor: "#ffffff" },
-                headerTitle: "",
-                headerLeft: () => (
-                    <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => alert("Menu aberto!")}>
-                        <Ionicons name="menu" size={24} color="#000" />
-                    </TouchableOpacity>
-                ),
-            }}
-        >
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-        </Stack>
+        <ThemeProvider>
+            {isLoading ? <LoadingScreen /> : <DrawerNavigator />}
+        </ThemeProvider>
     );
 }

@@ -5,7 +5,7 @@ Choose how you're feeling — and Moodify will present you a curated playlist.
 When you're ready, just hit play and enjoy the vibe.
 
 
-> 🔧 This app is currently in early development. Only dark/light mode and navigation have been implemented so far.
+> 🚧 🔧 This app is currently in early development. Only dark/light mode and navigation have been implemented so far.
 
 ---
 
